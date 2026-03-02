@@ -318,7 +318,7 @@ async function uploadImageToZai(imageData, token, filename = "image.png") {
             const imgResp = await fetch(imageData);
             if (!imgResp.ok) throw new Error("Failed to fetch image from URL");
             contentType = imgResp.headers.get("content-type") || "image/png";
-            imageBytes = new Uint8Array(await imgResp.arrayBuffer());
+            imageBytes = new Uint8Array ( await imgResp . arrayBuffer ( ) ) ;
         }
     }
     
@@ -357,7 +357,7 @@ async function uploadImageToZai(imageData, token, filename = "image.png") {
             "Authorization": `Bearer ${token}`,
             "Content-Type": `multipart/form-data; boundary=${boundary}`,
             "Origin": "https://chat.z.ai",
-            "Referer": "https://chat.z.ai/"
+            "Refer": "https://chat.z.ai/"
         },
         body: body
     });
@@ -534,7 +534,7 @@ async function handleChat(request) {
                 "X-Signature": signature,
                 "Content-Type": "application/json",
                 "Origin": "https://chat.z.ai",
-                "Referer": `https://chat.z.ai/c/${chatID}`
+                "Refer": `https://chat.z.ai/c/${chatID}`
             },
             body: JSON.stringify(upstreamBody)
         });
@@ -927,7 +927,7 @@ async function handleAudioGeneration(request) {
         const userId = payload?.sub || payload?.id || payload?.user_id;
         
         if (!userId) {
-            return new Response(JSON.stringify({ 
+            return new Response(JSON.stringify({
                 error: "Invalid token: cannot extract user ID"
             }), {
                 status: 401,
@@ -1127,7 +1127,7 @@ async function handleAudioGeneration(request) {
         console.log('  RIFF:', String.fromCharCode(mergedAudio[0], mergedAudio[1], mergedAudio[2], mergedAudio[3]));
         console.log('  File size:', fileSize);
         console.log('  WAVE:', String.fromCharCode(mergedAudio[8], mergedAudio[9], mergedAudio[10], mergedAudio[11]));
-        console.log('  Data chunk position:', dataChunkPos);
+        console.log('Data chunk position:', dataChunkPos);
         console.log('  Data size:', dataSize);
         console.log('  Sample rate:', mergedAudio[24] | (mergedAudio[25] << 8) | (mergedAudio[26] << 16) | (mergedAudio[27] << 24));
         console.log('  Channels:', mergedAudio[22] | (mergedAudio[23] << 8));
@@ -1257,7 +1257,7 @@ async function handleVoiceList(request) {
         const userId = payload?.sub || payload?.id || payload?.user_id;
         
         if (!userId) {
-            return new Response(JSON.stringify({ 
+            return new Response(JSON.stringify({
                 error: "Invalid token: cannot extract user ID"
             }), {
                 status: 401,
@@ -1297,7 +1297,7 @@ __name(handleVoiceList, "handleVoiceList");
 
 function handleWebUI() {
     const html = `<!DOCTYPE html>
-<html lang="en">
+<html lang="yes">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1322,7 +1322,7 @@ function handleWebUI() {
             margin: 0; 
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif; 
             background: linear-gradient(135deg, #0a0e1a 0%, #1a1f35 100%); 
-            color: var(--text); 
+            color: var(--text);
             min-height: 100vh; 
             display: flex; 
             flex-direction: column; 
@@ -1339,7 +1339,7 @@ function handleWebUI() {
             border: 1px solid var(--border);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
-        h1 { 
+        h1 {
             color: var(--accent); 
             margin: 0 0 10px 0; 
             font-size: 32px;
@@ -1476,8 +1476,8 @@ function handleWebUI() {
         
         /* Cards */
         .card { 
-            background: var(--panel); 
-            border: 1px solid var(--border); 
+            background: var(--panel);
+            border: 1px solid var(--border);
             border-radius: 12px; 
             padding: 25px; 
             margin: 15px 0; 
@@ -1506,9 +1506,9 @@ function handleWebUI() {
         }
         input, select, textarea { 
             width: 100%; 
-            background: var(--bg); 
-            border: 2px solid var(--border); 
-            color: var(--text); 
+            background: var(--bg);
+            border: 2px solid var(--border);
+            color: var(--text);
             padding: 12px 14px; 
             border-radius: 8px; 
             font-family: 'Courier New', monospace; 
@@ -1563,7 +1563,7 @@ function handleWebUI() {
         /* Output */
         .output { 
             background: #000; 
-            border-radius: 8px; 
+            border-radius: 8px;
             padding: 18px; 
             margin-top: 20px; 
             white-space: pre-wrap; 
@@ -1587,7 +1587,7 @@ function handleWebUI() {
         
         /* Media */
         audio, img { 
-            width: 100%; 
+            width: 100%;
             margin-top: 15px; 
             border-radius: 8px;
         }
@@ -1604,30 +1604,30 @@ function handleWebUI() {
             margin-bottom: 18px;
         }
         .voice-card { 
-            background: var(--bg); 
-            border: 2px solid var(--border); 
-            border-radius: 8px; 
+            background: var(--bg);
+            border: 2px solid var(--border);
+            border-radius: 8px;
             padding: 14px; 
-            cursor: pointer; 
+            cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .voice-card:hover { 
-            border-color: var(--accent); 
+            border-color: var(--accent);
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(16, 185, 129, 0.2);
         }
         .voice-card.selected { 
-            border-color: var(--accent); 
+            border-color: var(--accent);
             background: var(--accent-light);
             box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
         }
         .voice-name { 
-            font-weight: 700; 
+            font-weight: 700;
             margin-bottom: 6px; 
             font-size: 14px;
             color: var(--text);
         }
-        .voice-desc { 
+        .voice-description {
             font-size: 11px; 
             color: #94a3b8; 
             line-height: 1.4;
@@ -1635,7 +1635,7 @@ function handleWebUI() {
         .voice-badge { 
             display: inline-block; 
             background: linear-gradient(135deg, var(--accent) 0%, #059669 100%);
-            color: #000; 
+            color: #000;
             padding: 3px 8px; 
             border-radius: 4px; 
             font-size: 9px; 
@@ -2421,7 +2421,7 @@ function handleWebUI() {
                 const response = await fetch('/v1/audio/speech', {
                     method: 'POST',
                     headers: headers,
-                    body: JSON.stringify({ 
+                    body: JSON.stringify({
                         input: text,
                         voice: selectedVoice.name,
                         voice_id: selectedVoice.id,
